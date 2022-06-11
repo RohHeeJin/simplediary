@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 //useState을 이용하여 틀만들기
 
 const DiaryEditor = () => {
+  const authorInput = useRef();
+  const contentInput = useRef();
   //   const [author, setAuthor] = useState("");
   //   const [content, setContent] = useState("");
   // 위에 보이는 방법으로 할수있으나 하나로 요약가능 !
@@ -20,14 +22,25 @@ const DiaryEditor = () => {
 
   //저장하기 버튼
   const handleSubmit = (el) => {
-    console.log(state);
-    alert("완료");
+    if (state.author.length < 1) {
+      // focus
+      authorInput.current.focus();
+      return; // 리턴을 줌으로써 입력을 강제로 제어할수있다
+    }
+    if (state.content.length < 5) {
+      // focus
+      contentInput.current.focus();
+      return;
+    }
+
+    alert("저장성공");
   };
   return (
     <div className="DiaryEditor">
       <h1>오늘의 일기</h1>
       <div>
         <input
+          ref={authorInput}
           name="author"
           value={state.author}
           onChange={handleChangeState}
@@ -35,6 +48,7 @@ const DiaryEditor = () => {
       </div>
       <div>
         <textarea
+          ref={contentInput}
           name="content"
           value={state.content}
           onChange={handleChangeState}
