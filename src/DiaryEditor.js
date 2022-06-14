@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 //useState을 이용하여 틀만들기
 
-const DiaryEditor = () => {
+const DiaryEditor = ({ onCreate }) => {
   const authorInput = useRef();
   const contentInput = useRef();
   //   const [author, setAuthor] = useState("");
@@ -32,8 +32,13 @@ const DiaryEditor = () => {
       contentInput.current.focus();
       return;
     }
-
+    onCreate(state.author, state.content, state.emotion);
     alert("저장성공");
+    setState({
+      author: "",
+      content: "",
+      emotion: 1,
+    });
   };
   return (
     <div className="DiaryEditor">
